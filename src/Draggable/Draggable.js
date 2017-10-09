@@ -7,6 +7,7 @@ import {
   MouseSensor,
   TouchSensor,
   ForceTouchSensor,
+  KeyboardSensor,
 } from './Sensors';
 
 import {
@@ -174,6 +175,7 @@ export default class Draggable {
     return [
       TouchSensor,
       ForceTouchSensor,
+      KeyboardSensor,
       (this.options.native ? DragSensor : MouseSensor),
     ];
   }
@@ -200,7 +202,7 @@ export default class Draggable {
 
     this.source = this.originalSource.cloneNode(true);
 
-    if (!isDragEvent(originalEvent)) {
+    if (!isDragEvent(originalEvent) && !isKeyboardEvent(originalEvent)) {
       const appendableContainer = this.getAppendableContainer({source: this.originalSource});
       this.mirror = this.source.cloneNode(true);
 
@@ -348,6 +350,7 @@ export default class Draggable {
     if (isOverContainer) {
       overContainer.classList.add(this.getClassNameFor('container:over'));
 
+      console.log('drag:over:container')
       const dragOverContainerEvent = new DragOverContainerEvent({
         source: this.source,
         mirror: this.mirror,
@@ -365,6 +368,7 @@ export default class Draggable {
     if (isOverDraggable) {
       target.classList.add(this.getClassNameFor('draggable:over'));
 
+      console.log('drag:over', this.source, target)
       const dragOverEvent = new DragOverEvent({
         source: this.source,
         mirror: this.mirror,
@@ -499,6 +503,10 @@ function getSensorEvent(event) {
 
 function isDragEvent(event) {
   return /^drag/.test(event.type);
+}
+
+function isKeyboardEvent(event) {
+  return /^key/.test(event.type);
 }
 
 function applyUserSelect(element, value) {

@@ -3,6 +3,7 @@ import MouseSensor from './MouseSensor';
 import TouchSensor from './TouchSensor';
 import DragSensor from './DragSensor';
 import ForceTouchSensor from './ForceTouchSensor';
+import KeyboardSensor from './KeyboardSensor';
 
 export {
   Sensor,
@@ -10,4 +11,5 @@ export {
   TouchSensor,
   DragSensor,
   ForceTouchSensor,
+  KeyboardSensor,
 };

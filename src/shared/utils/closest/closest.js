@@ -13,6 +13,8 @@ export default function closest(element, selector) {
       return currentElement;
     } else if (typeof selector === 'string') {
       return matchFunction.call(currentElement, selector);
+    } else if (selector instanceof NodeList || selector instanceof Array) {
+      return Array.from(selector).find((selectorElement) => selectorElement === currentElement);
     } else {
       return selector(currentElement);
     }
